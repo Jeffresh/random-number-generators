@@ -1,10 +1,9 @@
-import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
 
-interface RandomEngine extends Serializable {
+interface RandomEngine {
     BigInteger generateRandom(BigInteger seed);
 }
 
@@ -29,6 +28,10 @@ class EngineGenerator {
         .mod(BigInteger.valueOf(31));
         this.engines.put("generator262", generator262);
 
+        RandomEngine generator263 = (a) -> a.multiply(BigInteger.valueOf(7).pow(5))
+        .mod(BigInteger.valueOf(2).pow(31).subtract(BigInteger.valueOf(1)));
+        this.engines.put("generator263", generator263);
+
     }
 
     public static void main(String[] args) throws Exception {
@@ -37,7 +40,7 @@ class EngineGenerator {
         handler.createEngines();
         int seed = 1;
         RandomGenerator r = new RandomGenerator(seed);
-        r.generateSequence(handler.engines.get("generator262"), seed, 33);
+        r.generateSequence(handler.engines.get("generator263"), seed, 33);
 
 
    
