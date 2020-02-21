@@ -4,41 +4,53 @@ import java.util.ArrayList;
 public class RandomGenerator{
 
     BigInteger seed;
-    BigInteger random_generated;
+    BigInteger random_ith_generated;
     ArrayList<BigInteger> random_sequence;
 
     public RandomGenerator(int seed){
+
         this.seed = BigInteger.valueOf(seed);
-        this.random_generated = BigInteger.valueOf(seed);
+        this.random_ith_generated = BigInteger.valueOf(seed);
         this.random_sequence = new ArrayList<BigInteger>();
     }
 
     public RandomGenerator(){
+
         this.seed = BigInteger.valueOf(0);
-        this.random_generated = BigInteger.valueOf(0);
+        this.random_ith_generated = BigInteger.valueOf(0);
         this.random_sequence = new ArrayList<BigInteger>();
     }
 
-    public void setSeed(int seed){
-        this.seed = BigInteger.valueOf(seed);
+    public void reset(){
+        this.seed = BigInteger.valueOf(0);
+        this.random_ith_generated = this.seed;
+        this.random_sequence = new ArrayList<BigInteger>();
     }
 
-    public void generateSequence(RandomEngine re, int initial_seed, int sequence_length){
+    public void setSeed(int seed){ this.seed = BigInteger.valueOf(seed);}
+
+    public ArrayList<BigInteger> getRandomSequence(RandomEngine re, int initial_seed, int sequence_length){
 
         this.setSeed(initial_seed);
         for(int i = 0; i < sequence_length ; i++){
-            random_sequence.add(this.random_generated);
-            generateRandomNumber(re, this.random_generated);
+            generateRandomNumber(re, this.random_ith_generated);
+            random_sequence.add(this.random_ith_generated);
         }
-
-        for(BigInteger val: this.random_sequence){
-            System.out.println(val);
-        }
-
+        return random_sequence;
     }
 
-    public void generateRandomNumber(RandomEngine re, BigInteger seed){
-            this.random_generated = re.generateRandom(seed);
+    public BigInteger getIthRandomNumber(RandomEngine re, int initial_seed, int n_number){
+        // this.reset();
+        this.setSeed(initial_seed);
+        for(int i = 0; i < n_number; i++){
+            generateRandomNumber(re, this.random_ith_generated);
+        }
+        return this.random_ith_generated;
     }
 
+    private BigInteger generateRandomNumber(RandomEngine re, BigInteger seed){
+        this.random_ith_generated = re.generateRandom(seed);
+        return this.random_ith_generated; 
+    }
+    
 }
