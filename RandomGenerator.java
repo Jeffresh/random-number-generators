@@ -8,26 +8,21 @@ public class RandomGenerator{
     ArrayList<BigInteger> random_sequence;
 
     public RandomGenerator(int seed){
-
         this.seed = BigInteger.valueOf(seed);
         this.random_ith_generated = BigInteger.valueOf(seed);
         this.random_sequence = new ArrayList<BigInteger>();
     }
-
-    public RandomGenerator(){
-
-        this.seed = BigInteger.valueOf(0);
-        this.random_ith_generated = BigInteger.valueOf(0);
-        this.random_sequence = new ArrayList<BigInteger>();
-    }
+    public RandomGenerator(){ this(0);}
 
     public void reset(){
-        this.seed = BigInteger.valueOf(0);
         this.random_ith_generated = this.seed;
         this.random_sequence = new ArrayList<BigInteger>();
     }
 
-    public void setSeed(int seed){ this.seed = BigInteger.valueOf(seed);}
+    public void setSeed(int seed){ 
+        this.seed = BigInteger.valueOf(seed);
+        this.reset();
+    }
 
     private void processingRandoms(RandomEngine re, int initial_seed, int sequence_length, boolean get_sequence){
         this.setSeed(initial_seed);

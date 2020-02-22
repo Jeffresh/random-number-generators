@@ -40,16 +40,16 @@ class EngineGenerator {
         handler.createEngines();
         int seed = 1;
         RandomGenerator r = new RandomGenerator(seed);
-        r.getRandomSequence(handler.engines.get("generator262"), seed, 33);
+        r.getRandomSequence(handler.engines.get("generator261b"), seed, 5);
 
         for(BigInteger n: r.random_sequence){
             System.out.println(n);
         }
+        r.reset();
+        r.getIthRandomNumber(handler.engines.get("generator262"), seed, 33);
 
-        RandomGenerator p = new RandomGenerator(seed);
-        p.getIthRandomNumber(handler.engines.get("generator262"), seed, 33);
 
-        System.out.println(p.random_ith_generated);
+        System.out.println(r.random_ith_generated);
    
     }
     
