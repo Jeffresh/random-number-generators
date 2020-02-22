@@ -5,43 +5,63 @@ import java.util.Map;
 @FunctionalInterface
 interface RandomEngine {
     BigInteger generateRandom(BigInteger seed);
-    BigInteger generateCombinedRandom(BigInteger, seed1, seed2, seed3);
+}
+
+@FunctionalInterface
+interface RandomCombinedEngine{
+    BigInteger generateCombinedRandom(BigInteger seed1, BigInteger seed2, BigInteger seed3);
 }
 
 class EngineGenerator {
 
-    Map <String, RandomEngine> engines ;
+    public Map<String, RandomEngine> engines;
+    public Map<String, RandomCombinedEngine> combined_engines;
 
-    public EngineGenerator(){
-        engines = new HashMap<String, RandomEngine>();
+    public static BigInteger two_pow_31_minus_one = BigInteger.valueOf(32363);
+
+    public EngineGenerator() {
+        this.engines = new HashMap<String, RandomEngine>();
+        this.combined_engines = new HashMap<String, RandomCombinedEngine>();
     }
 
-    public void createEngines(){
+    public void createEngines() {
 
         RandomEngine generator261a = (a) -> a.multiply(BigInteger.valueOf(5))
-        .mod(BigInteger.valueOf(2).pow(5));
+                .mod(BigInteger.valueOf(2).pow(5));
         this.engines.put("generator261a", generator261a);
 
         RandomEngine generator261b = (a) -> a.multiply(BigInteger.valueOf(7))
-        .mod(BigInteger.valueOf(2).pow(5));
+                .mod(BigInteger.valueOf(2).pow(5));
         this.engines.put("generator261b", generator261b);
 
         RandomEngine generator262 = (a) -> a.multiply(BigInteger.valueOf(3))
-        .mod(BigInteger.valueOf(31));
+                .mod(BigInteger.valueOf(31));
         this.engines.put("generator262", generator262);
 
         RandomEngine generator263 = (a) -> a.multiply(BigInteger.valueOf(7).pow(5))
-        .mod(BigInteger.valueOf(2147483647));
+                .mod(BigInteger.valueOf(2147483647));
         this.engines.put("generator263", generator263);
 
-        RandomEngine generatorFishmanAndMoore1 = (a) -> a.multiply(BigInteger.valueOf(48271)).mod(2147483647);
+        this.engines.put("generator263", generator263);
+
+        RandomCombinedEngine generatorCombined = (a, b, c) -> {
+            BigInteger w = a.multiply(BigInteger.valueOf(157)).mod(BigInteger.valueOf(32363));
+            BigInteger x = b.multiply(BigInteger.valueOf(146)).mod(BigInteger.valueOf(32363));
+            BigInteger y = c.multiply(BigInteger.valueOf(142)).mod(BigInteger.valueOf(32363));
+
+            return (w.subtract(x).add(y)).mod(two_pow_31_minus_one);
+
+        };
+        this.combined_engines.put("generatorCombined", generatorCombined);
+
+        RandomEngine generatorFishmanAndMoore1 = (a) -> a.multiply(BigInteger.valueOf(48271)).mod(two_pow_31_minus_one);
         this.engines.put("generatorFishmanAndMore1", generatorFishmanAndMoore1);
 
-        RandomEngine generatorFishmanAndMoore2 = (a) -> a.multiply(BigInteger.valueOf(69621)).mod(2147483647);
+        RandomEngine generatorFishmanAndMoore2 = (a) -> a.multiply(BigInteger.valueOf(69621)).mod(two_pow_31_minus_one);
         this.engines.put("generatorFishmanAndMore2", generatorFishmanAndMoore2);
 
-        RandomEngine generatorRandu = (a) -> a.multiply(BigInteger.valueOf(65539)).mod(2147483647);
-        this.engines.put("generadorRandu", generadorRandu);
+        RandomEngine generatorRandu = (a) -> a.multiply(BigInteger.valueOf(65539)).mod(two_pow_31_minus_one);
+        this.engines.put("generatorRandu", generatorRandu);
     }
 
     public static void main(String[] args) throws Exception {
