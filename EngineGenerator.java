@@ -32,6 +32,14 @@ class EngineGenerator {
         RandomEngine generator263 = (a) -> a.multiply(BigInteger.valueOf(7).pow(5))
         .mod(BigInteger.valueOf(2147483647));
         this.engines.put("generator263", generator263);
+        
+        RandomEngine generatorFishmanAndMoore1 = (a) -> a.multiply(BigInteger.valueOf(48271)).mod(2147483647);
+        this.engines.put("generatorFishmanAndMore1", generatorFishmanAndMoore1);
+        RandomEngine generatorFishmanAndMoore2 = (a) -> a.multiply(BigInteger.valueOf(69621)).mod(2147483647);
+        this.engines.put("generatorFishmanAndMore2", generatorFishmanAndMoore2);
+
+
+
     }
 
     public static void main(String[] args) throws Exception {
