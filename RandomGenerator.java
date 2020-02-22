@@ -6,17 +6,20 @@ public class RandomGenerator{
     private BigInteger seed;
     private BigInteger random_ith_generated;
     private ArrayList<BigInteger> random_sequence;
+    private ArrayList<BigInteger> random_combined_sequence;
 
     public RandomGenerator(int seed){
         this.seed = BigInteger.valueOf(seed);
         this.random_ith_generated = BigInteger.valueOf(seed);
         this.random_sequence = new ArrayList<BigInteger>();
+        this.random_combined_sequence = new ArrayList<BigInteger>();
     }
     public RandomGenerator(){ this(0);}
 
     public void reset(){
         this.random_ith_generated = this.seed;
         this.random_sequence = new ArrayList<BigInteger>();
+        this.random_combined_sequence = new ArrayList<BigInteger>();
     }
 
     public void setSeed(int seed){ 
@@ -29,7 +32,11 @@ public class RandomGenerator{
     }
 
     public ArrayList<BigInteger> getRandomSequenceGenerated(){
-        return random_sequence;
+        return this.random_sequence;
+    }
+
+    public ArrayList<BigInteger> getRandomCombinedSequenceGenerated(){
+        return this.random_combined_sequence;
     }
 
     private void processingRandoms(RandomEngine re, int initial_seed, int sequence_length, boolean get_sequence){
@@ -56,5 +63,24 @@ public class RandomGenerator{
         this.random_ith_generated = re.generateRandom(seed);
         return this.random_ith_generated; 
     }
+
+    public BigInteger getIthRandomNumberCombined(RandomCombinedEngine v, RandomEngine w, RandomEngine y,
+    RandomEngine x, int seed_w, int seed_y , int seed_x, int ith_number){
+        return v.generateCombinedRandom(getIthRandomNumber(w, seed_w, ith_number),
+        getIthRandomNumber(y, seed_y, ith_number),
+        getIthRandomNumber(x, seed_x, ith_number));
+    }
+
+    public ArrayList<BigInteger> getRandomSequenceCombined(RandomCombinedEngine v, RandomEngine w, RandomEngine y,
+    RandomEngine x, int seed_w, int seed_y , int seed_x, int ith_number){
+
+        for (int i = 0; i < ith_number; i++) {
+            random_combined_sequence.add(
+            getIthRandomNumberCombined(v, w, y, x, seed_w, seed_y, seed_x, i));       
+        }
+
+        return random_combined_sequence;
+    }
+
     
 }
