@@ -29,22 +29,23 @@ public class RandomGenerator{
 
     public void setSeed(int seed){ this.seed = BigInteger.valueOf(seed);}
 
-    public ArrayList<BigInteger> getRandomSequence(RandomEngine re, int initial_seed, int sequence_length){
-
+    private void processingRandoms(RandomEngine re, int initial_seed, int sequence_length, boolean get_sequence){
         this.setSeed(initial_seed);
         for(int i = 0; i < sequence_length ; i++){
             generateRandomNumber(re, this.random_ith_generated);
-            random_sequence.add(this.random_ith_generated);
+            if(get_sequence)
+                random_sequence.add(this.random_ith_generated);
         }
+    }
+
+    public ArrayList<BigInteger> getRandomSequence(RandomEngine re, int initial_seed, 
+    int sequence_length){
+        this.processingRandoms(re, initial_seed,sequence_length, true);
         return random_sequence;
     }
 
-    public BigInteger getIthRandomNumber(RandomEngine re, int initial_seed, int n_number){
-        // this.reset();
-        this.setSeed(initial_seed);
-        for(int i = 0; i < n_number; i++){
-            generateRandomNumber(re, this.random_ith_generated);
-        }
+    public BigInteger getIthRandomNumber(RandomEngine re, int initial_seed, int ith_number){
+        this.processingRandoms(re, initial_seed, ith_number, false);
         return this.random_ith_generated;
     }
 

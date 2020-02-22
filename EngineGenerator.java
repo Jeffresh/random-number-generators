@@ -47,7 +47,7 @@ class EngineGenerator {
         }
 
         RandomGenerator p = new RandomGenerator(seed);
-        p.getIthRandomNumber(handler.engines.get("generator263"), seed, 10000);
+        p.getIthRandomNumber(handler.engines.get("generator262"), seed, 33);
 
         System.out.println(p.random_ith_generated);
    
