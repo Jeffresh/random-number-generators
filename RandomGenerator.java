@@ -3,9 +3,9 @@ import java.util.ArrayList;
 
 public class RandomGenerator{
 
-    BigInteger seed;
-    BigInteger random_ith_generated;
-    ArrayList<BigInteger> random_sequence;
+    private BigInteger seed;
+    private BigInteger random_ith_generated;
+    private ArrayList<BigInteger> random_sequence;
 
     public RandomGenerator(int seed){
         this.seed = BigInteger.valueOf(seed);
@@ -22,6 +22,14 @@ public class RandomGenerator{
     public void setSeed(int seed){ 
         this.seed = BigInteger.valueOf(seed);
         this.reset();
+    }
+
+    public BigInteger getRandomGenerated(){
+        return this.random_ith_generated;
+    }
+
+    public ArrayList<BigInteger> getRandomSequenceGenerated(){
+        return random_sequence;
     }
 
     private void processingRandoms(RandomEngine re, int initial_seed, int sequence_length, boolean get_sequence){
