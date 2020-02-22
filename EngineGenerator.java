@@ -5,6 +5,7 @@ import java.util.Map;
 @FunctionalInterface
 interface RandomEngine {
     BigInteger generateRandom(BigInteger seed);
+    BigInteger generateCombinedRandom(BigInteger, seed1, seed2, seed3);
 }
 
 class EngineGenerator {
@@ -32,14 +33,15 @@ class EngineGenerator {
         RandomEngine generator263 = (a) -> a.multiply(BigInteger.valueOf(7).pow(5))
         .mod(BigInteger.valueOf(2147483647));
         this.engines.put("generator263", generator263);
-        
+
         RandomEngine generatorFishmanAndMoore1 = (a) -> a.multiply(BigInteger.valueOf(48271)).mod(2147483647);
         this.engines.put("generatorFishmanAndMore1", generatorFishmanAndMoore1);
+
         RandomEngine generatorFishmanAndMoore2 = (a) -> a.multiply(BigInteger.valueOf(69621)).mod(2147483647);
         this.engines.put("generatorFishmanAndMore2", generatorFishmanAndMoore2);
 
-
-
+        RandomEngine generatorRandu = (a) -> a.multiply(BigInteger.valueOf(65539)).mod(2147483647);
+        this.engines.put("generadorRandu", generadorRandu);
     }
 
     public static void main(String[] args) throws Exception {
